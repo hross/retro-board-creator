@@ -93,16 +93,16 @@ function nextRetroDate(
   retroCadenceInWeeks: number
 ): Date {
   // approximate the date of the next retro based on frequency
-  let nextRetroDate = new Date(
+  const nextDate = new Date(
     lastRetroDate.getDate() + retroCadenceInWeeks * 7
   )
   // make sure it's on the right day, in case the day of week changed
-  nextRetroDate.setDate(
-    nextRetroDate.getDate() +
-      ((7 + retroDayOfWeek - nextRetroDate.getDay()) % 7)
+  nextDate.setDate(
+    nextDate.getDate() +
+      ((7 + retroDayOfWeek - nextDate.getDay()) % 7)
   )
 
-  return nextRetroDate
+  return nextDate
 }
 
 // create the retro board and return the URL
