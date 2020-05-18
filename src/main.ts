@@ -1,16 +1,19 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import * as core from '@actions/core';
+
+import {IRetroArguments, tryCreateRetro} from './retro'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const args: IRetroArguments = {
+      repoToken: core.getInput('repo-token', {required: true}),
+      handles: [],//core.getInput('repo-token', {required: true}),
+      retroCadenceInWeeks: parseInt(core.getInput('retro-cadence-weeks')) ?? 1,
+      retroDayOfWeek: parseInt(core.getInput('retro-day-of-week')) ?? 0,
+      onlyLog: core.getInput('only-log') === 'true'
+    }
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    await tryCreateRetro(args);
 
-    core.setOutput('time', new Date().toTimeString())
   } catch (error) {
     core.setFailed(error.message)
   }
