@@ -39,7 +39,7 @@ export async function tryCreateRetro(args: IRetroArguments): Promise<void> {
   // who is driving the retro?
   const nextRetroDriver = whoIsNext(args.handles, args.retroCadenceInWeeks)
 
-  core.info(`Retro driver is: ${retroDate}`)
+  core.info(`Retro driver is: ${nextRetroDriver}`)
 
   if (!args.onlyLog) {
     // create the project board
@@ -101,10 +101,15 @@ function nextRetroDate(
 ): Date {
   // approximate the date of the next retro based on frequency
   const nextDate = new Date(lastRetroDate.getDate() + retroCadenceInWeeks * 7)
+
+  core.info(`Next approximate retro date is ${nextDate}`)
+
+  const daysToAdd = (7 + retroDayOfWeek - nextDate.getDay()) % 7
+
+  core.info(`Adding: ${daysToAdd} to get to the next retro day of the week`)
+
   // make sure it's on the right day, in case the day of week changed
-  nextDate.setDate(
-    nextDate.getDate() + ((7 + retroDayOfWeek - nextDate.getDay()) % 7)
-  )
+  nextDate.setDate(nextDate.getDate() + daysToAdd)
 
   return nextDate
 }
