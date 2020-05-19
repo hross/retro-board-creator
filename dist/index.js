@@ -7401,9 +7401,9 @@ function tryCreateRetro(args) {
         const lastRetroOn = yield findLatestRetroDate(client);
         core.info(`Last retro created on: ${lastRetroOn}`);
         // should we create a retro or did it already get created?
-        const diff = lastRetroOn.getMilliseconds() - new Date().getMilliseconds();
+        const diff = lastRetroOn.getMilliseconds() - (new Date().getMilliseconds());
         const diffInDays = diff / (1000 * 60 * 60 * 24);
-        core.info(`Retro day difference is: ${diffInDays}`);
+        core.info(`Retro day difference is: ${diff}`);
         if (diffInDays > -1) {
             core.info(`Retro hasn't happened yet, so not going to create a new one.`);
             return;
