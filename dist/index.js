@@ -3511,13 +3511,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const retro_1 = __webpack_require__(478);
+function parseCommaSeparatedString(s) {
+    if (!s.length)
+        return [];
+    return s.split(',').map(l => l.trim());
+}
 function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const args = {
                 repoToken: core.getInput('repo-token', { required: true }),
-                handles: [],
+                handles: parseCommaSeparatedString(core.getInput('handles', { required: true })),
                 retroCadenceInWeeks: (_a = parseInt(core.getInput('retro-cadence-weeks')), (_a !== null && _a !== void 0 ? _a : 1)),
                 retroDayOfWeek: (_b = parseInt(core.getInput('retro-day-of-week')), (_b !== null && _b !== void 0 ? _b : 0)),
                 onlyLog: core.getInput('only-log') === 'true'
@@ -7451,8 +7456,7 @@ function nextRetroDate(lastRetroDate, retroDayOfWeek, retroCadenceInWeeks) {
     // approximate the date of the next retro based on frequency
     const nextDate = new Date(lastRetroDate.getDate() + retroCadenceInWeeks * 7);
     // make sure it's on the right day, in case the day of week changed
-    nextDate.setDate(nextDate.getDate() +
-        ((7 + retroDayOfWeek - nextDate.getDay()) % 7));
+    nextDate.setDate(nextDate.getDate() + ((7 + retroDayOfWeek - nextDate.getDay()) % 7));
     return nextDate;
 }
 // create the retro board and return the URL
