@@ -2,7 +2,7 @@
   <a href="https://github.com/actions/typescript-action/actions"><img alt="retro-board-creator status" src="https://github.com/hross/retro-board-creator/workflows/build-test/badge.svg"></a>
 </p>
 
-# Creating Rero Boards
+# Creating Retro Boards
 
 ```
 name: Create the Retrospective Board
