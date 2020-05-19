@@ -7396,6 +7396,7 @@ const github = __importStar(__webpack_require__(469));
 function tryCreateRetro(args) {
     return __awaiter(this, void 0, void 0, function* () {
         const client = new github.GitHub(args.repoToken);
+        core.info('Looking for latest retro date...');
         // find the last retro
         const lastRetroOn = yield findLatestRetroDate(client);
         core.info(`Last retro created on: ${lastRetroOn}`);
@@ -7444,11 +7445,13 @@ function findLatestRetroDate(client) {
             owner: github.context.repo.owner,
             repo: github.context.repo.owner
         });
+        core.info(`Found ${projects.data.length} for this repo`);
         // find all the projects with a retro format, parse the date and return the first date after sort
         const sorted = projects.data
             .filter(proj => proj.body.startsWith(retroBodyStart))
             .map(proj => new Date(proj.body.replace(retroBodyStart, '')).getMilliseconds())
             .sort();
+        core.info(`Found ${sorted.length} retro projects for this repo`);
         // return the latest or today's date
         return sorted.length > 0 ? new Date(sorted[0]) : new Date();
     });

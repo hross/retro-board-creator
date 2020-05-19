@@ -12,6 +12,8 @@ export interface IRetroArguments {
 export async function tryCreateRetro(args: IRetroArguments): Promise<void> {
   const client = new github.GitHub(args.repoToken)
 
+  core.info('Looking for latest retro date...')
+
   // find the last retro
   const lastRetroOn: Date = await findLatestRetroDate(client)
 
@@ -74,6 +76,8 @@ async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
     repo: github.context.repo.owner
   })
 
+  core.info(`Found ${projects.data.length} for this repo`)
+
   // find all the projects with a retro format, parse the date and return the first date after sort
   const sorted = projects.data
     .filter(proj => proj.body.startsWith(retroBodyStart))
@@ -81,6 +85,8 @@ async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
       new Date(proj.body.replace(retroBodyStart, '')).getMilliseconds()
     )
     .sort()
+
+  core.info(`Found ${sorted.length} retro projects for this repo`)
 
   // return the latest or today's date
   return sorted.length > 0 ? new Date(sorted[0]) : new Date()
