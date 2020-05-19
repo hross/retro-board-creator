@@ -1,0 +1,18 @@
+# trigger stale on issue label changes so we can test it
+
+name: Trigger stale on issue label
+
+on:
+  issues:
+    types: [labeled, unlabeled]
+    
+jobs:
+  create-board:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      with: 
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        handles: hross,alepauly
+        only-log: true
