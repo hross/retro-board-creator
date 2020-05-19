@@ -15,8 +15,7 @@ jobs:
   create-board:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
+    - uses: hross/retro-board-creator@v1
       with: 
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         handles: hross,alepauly
