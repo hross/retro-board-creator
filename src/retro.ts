@@ -71,9 +71,10 @@ function whoIsNext(handles: string[], retroCadenceInWeeks: number = 1): string {
 // look at all of the repo projects and give back the last retro date
 async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
   const retroBodyStart = 'Retro on '
+
   const projects = await client.projects.listForRepo({
     owner: github.context.repo.owner,
-    repo: github.context.repo.owner
+    repo: github.context.repo.repo
   })
 
   core.info(`Found ${projects.data.length} for this repo`)
@@ -121,7 +122,7 @@ async function createBoard(
 
   const project = await client.projects.createForRepo({
     owner: github.context.repo.owner,
-    repo: github.context.repo.owner,
+    repo: github.context.repo.repo,
     name: `Retrospective - Week of ${readableDate}`,
     body: `Retro on ${retroDate}`
   })
@@ -149,14 +150,14 @@ async function createTrackingIssue(
 ): Promise<number> {
   const issue = await client.issues.create({
     owner: github.context.repo.owner,
-    repo: github.context.repo.owner,
+    repo: github.context.repo.repo,
     title: `The next retro driver is @${retroDriver}`,
     body: `Hey @${retroDriver} please remind everyone to fill out the retrospective board at ${projectUrl}`
   })
 
   await client.issues.addAssignees({
     owner: github.context.repo.owner,
-    repo: github.context.repo.owner,
+    repo: github.context.repo.repo,
     issue_number: issue.data.number,
     assignees: [retroDriver]
   })

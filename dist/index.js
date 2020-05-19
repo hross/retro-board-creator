@@ -7443,7 +7443,7 @@ function findLatestRetroDate(client) {
         const retroBodyStart = 'Retro on ';
         const projects = yield client.projects.listForRepo({
             owner: github.context.repo.owner,
-            repo: github.context.repo.owner
+            repo: github.context.repo.repo
         });
         core.info(`Found ${projects.data.length} for this repo`);
         // find all the projects with a retro format, parse the date and return the first date after sort
@@ -7474,7 +7474,7 @@ function createBoard(client, retroDate) {
         });
         const project = yield client.projects.createForRepo({
             owner: github.context.repo.owner,
-            repo: github.context.repo.owner,
+            repo: github.context.repo.repo,
             name: `Retrospective - Week of ${readableDate}`,
             body: `Retro on ${retroDate}`
         });
@@ -7496,13 +7496,13 @@ function createTrackingIssue(client, projectUrl, retroDriver) {
     return __awaiter(this, void 0, void 0, function* () {
         const issue = yield client.issues.create({
             owner: github.context.repo.owner,
-            repo: github.context.repo.owner,
+            repo: github.context.repo.repo,
             title: `The next retro driver is @${retroDriver}`,
             body: `Hey @${retroDriver} please remind everyone to fill out the retrospective board at ${projectUrl}`
         });
         yield client.issues.addAssignees({
             owner: github.context.repo.owner,
-            repo: github.context.repo.owner,
+            repo: github.context.repo.repo,
             issue_number: issue.data.number,
             assignees: [retroDriver]
         });
