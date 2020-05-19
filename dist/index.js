@@ -7402,8 +7402,9 @@ function tryCreateRetro(args) {
         core.info(`Last retro created on: ${lastRetroOn}`);
         // should we create a retro or did it already get created?
         const diff = lastRetroOn.getMilliseconds() - new Date().getMilliseconds();
-        const diffInDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-        if (diffInDays > 1) {
+        const diffInDays = diff / (1000 * 60 * 60 * 24);
+        core.info(`Retro day difference is: ${diffInDays}`);
+        if (diffInDays > -1) {
             core.info(`Retro hasn't happened yet, so not going to create a new one.`);
             return;
         }
