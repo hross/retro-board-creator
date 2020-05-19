@@ -7459,7 +7459,8 @@ function findLatestRetroDate(client) {
 // calculate the next retro date given the starting week, day of the week the retro should occur, and how often the retro happens
 function nextRetroDate(lastRetroDate, retroDayOfWeek, retroCadenceInWeeks) {
     // approximate the date of the next retro based on frequency
-    const nextDate = new Date(lastRetroDate.getDate() + retroCadenceInWeeks * 7);
+    const nextDate = new Date(lastRetroDate);
+    nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks * 7));
     core.info(`Next approximate retro date is ${nextDate}`);
     const daysToAdd = (7 + retroDayOfWeek - nextDate.getDay()) % 7;
     core.info(`Adding: ${daysToAdd} to get to the next retro day of the week`);

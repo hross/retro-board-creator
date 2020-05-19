@@ -100,7 +100,8 @@ function nextRetroDate(
   retroCadenceInWeeks: number
 ): Date {
   // approximate the date of the next retro based on frequency
-  const nextDate = new Date(lastRetroDate.getDate() + retroCadenceInWeeks * 7)
+  const nextDate = new Date(lastRetroDate)
+  nextDate.setDate(nextDate.getDate() + retroCadenceInWeeks * 7)
 
   core.info(`Next approximate retro date is ${nextDate}`)
 
