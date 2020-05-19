@@ -7451,7 +7451,8 @@ function findLatestRetroDate(client) {
         const sorted = projects.data
             .filter(proj => proj.body.startsWith(retroBodyStart))
             .map(proj => Date.parse(proj.body.replace(retroBodyStart, '')))
-            .sort();
+            .sort()
+            .reverse();
         core.info(`Found ${sorted.length} retro projects for this repo`);
         // return the latest or today's date
         return sorted.length > 0 ? new Date(sorted[0]) : new Date();
@@ -7460,8 +7461,13 @@ function findLatestRetroDate(client) {
 // calculate the next retro date given the starting week, day of the week the retro should occur, and how often the retro happens
 function nextRetroDate(lastRetroDate, retroDayOfWeek, retroCadenceInWeeks) {
     // approximate the date of the next retro based on frequency
-    const nextDate = new Date(lastRetroDate);
-    nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7);
+    let nextDate = new Date(lastRetroDate);
+    nextDate.setDate(nextDate.getDate() + retroCadenceInWeeks * 7);
+    if (nextDate < new Date()) {
+        core.info('Next calculated retro is in the past, so using today to start retros');
+        nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7);
+    }
     core.info(`Next approximate retro date is ${nextDate}`);
     const daysToAdd = (7 + retroDayOfWeek - nextDate.getDay()) % 7;
     core.info(`Adding: ${daysToAdd} to get to the next retro day of the week`);

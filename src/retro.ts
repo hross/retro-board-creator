@@ -86,6 +86,7 @@ async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
     .filter(proj => proj.body.startsWith(retroBodyStart))
     .map(proj => Date.parse(proj.body.replace(retroBodyStart, '')))
     .sort()
+    .reverse()
 
   core.info(`Found ${sorted.length} retro projects for this repo`)
 
@@ -100,8 +101,16 @@ function nextRetroDate(
   retroCadenceInWeeks: number
 ): Date {
   // approximate the date of the next retro based on frequency
-  const nextDate = new Date(lastRetroDate)
-  nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7)
+  let nextDate = new Date(lastRetroDate)
+  nextDate.setDate(nextDate.getDate() + retroCadenceInWeeks * 7)
+
+  if (nextDate < new Date()) {
+    core.info(
+      'Next calculated retro is in the past, so using today to start retros'
+    )
+    nextDate = new Date()
+    nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7)
+  }
 
   core.info(`Next approximate retro date is ${nextDate}`)
 
