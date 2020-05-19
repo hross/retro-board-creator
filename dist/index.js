@@ -3524,7 +3524,7 @@ function run() {
                 repoToken: core.getInput('repo-token', { required: true }),
                 handles: parseCommaSeparatedString(core.getInput('handles', { required: true })),
                 retroCadenceInWeeks: (_a = parseInt(core.getInput('retro-cadence-weeks')), (_a !== null && _a !== void 0 ? _a : 1)),
-                retroDayOfWeek: (_b = parseInt(core.getInput('retro-day-of-week')), (_b !== null && _b !== void 0 ? _b : 0)),
+                retroDayOfWeek: (_b = parseInt(core.getInput('retro-day-of-week')), (_b !== null && _b !== void 0 ? _b : 5)),
                 onlyLog: core.getInput('only-log') === 'true'
             };
             yield retro_1.tryCreateRetro(args);
