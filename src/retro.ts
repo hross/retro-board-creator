@@ -83,7 +83,7 @@ async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
   const sorted = projects.data
     .filter(proj => proj.body.startsWith(retroBodyStart))
     .map(proj =>
-      new Date(proj.body.replace(retroBodyStart, '')).getMilliseconds()
+      Date.parse(proj.body.replace(retroBodyStart, ''))
     )
     .sort()
 
