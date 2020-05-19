@@ -7454,8 +7454,10 @@ function findLatestRetroDate(client) {
             .sort()
             .reverse();
         core.info(`Found ${sorted.length} retro projects for this repo`);
+        const defaultRetroDate = new Date();
+        defaultRetroDate.setDate(defaultRetroDate.getDate() - 1); // 1 day in the past to ensure we create a new retro
         // return the latest or today's date
-        return sorted.length > 0 ? new Date(sorted[0]) : new Date();
+        return sorted.length > 0 ? new Date(sorted[0]) : defaultRetroDate;
     });
 }
 // calculate the next retro date given the starting week, day of the week the retro should occur, and how often the retro happens
