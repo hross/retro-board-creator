@@ -55,7 +55,7 @@ export async function tryCreateRetro(args: IRetroArguments): Promise<void> {
 }
 
 // figure who is running the next retro based on the list
-function whoIsNext(handles: string[], retroCadenceInWeeks: number = 1): string {
+function whoIsNext(handles: string[], retroCadenceInWeeks: number): string {
   // choose an arbitrary day to start with
   const firstWeek = new Date('01/01/2010')
   const today = new Date()
@@ -101,7 +101,7 @@ function nextRetroDate(
 ): Date {
   // approximate the date of the next retro based on frequency
   const nextDate = new Date(lastRetroDate)
-  nextDate.setDate(nextDate.getDate() + retroCadenceInWeeks * 7)
+  nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7)
 
   core.info(`Next approximate retro date is ${nextDate}`)
 

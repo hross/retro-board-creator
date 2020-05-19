@@ -7426,7 +7426,7 @@ function tryCreateRetro(args) {
 }
 exports.tryCreateRetro = tryCreateRetro;
 // figure who is running the next retro based on the list
-function whoIsNext(handles, retroCadenceInWeeks = 1) {
+function whoIsNext(handles, retroCadenceInWeeks) {
     // choose an arbitrary day to start with
     const firstWeek = new Date('01/01/2010');
     const today = new Date();
@@ -7460,7 +7460,7 @@ function findLatestRetroDate(client) {
 function nextRetroDate(lastRetroDate, retroDayOfWeek, retroCadenceInWeeks) {
     // approximate the date of the next retro based on frequency
     const nextDate = new Date(lastRetroDate);
-    nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks * 7));
+    nextDate.setDate(nextDate.getDate() + (retroCadenceInWeeks - 1) * 7);
     core.info(`Next approximate retro date is ${nextDate}`);
     const daysToAdd = (7 + retroDayOfWeek - nextDate.getDay()) % 7;
     core.info(`Adding: ${daysToAdd} to get to the next retro day of the week`);
