@@ -3519,6 +3519,7 @@ function parseCommaSeparatedString(s) {
 function run() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
+        core.info('Starting retro creator');
         try {
             const args = {
                 repoToken: core.getInput('repo-token', { required: true }),
@@ -3527,6 +3528,7 @@ function run() {
                 retroDayOfWeek: (_b = parseInt(core.getInput('retro-day-of-week')), (_b !== null && _b !== void 0 ? _b : 5)),
                 onlyLog: core.getInput('only-log') === 'true'
             };
+            core.info('Arguments parsed. Starting creation.');
             yield retro_1.tryCreateRetro(args);
         }
         catch (error) {

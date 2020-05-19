@@ -8,6 +8,8 @@ function parseCommaSeparatedString(s: string): string[] {
 }
 
 async function run(): Promise<void> {
+  core.info('Starting retro creator')
+
   try {
     const args: IRetroArguments = {
       repoToken: core.getInput('repo-token', {required: true}),
@@ -18,6 +20,8 @@ async function run(): Promise<void> {
       retroDayOfWeek: parseInt(core.getInput('retro-day-of-week')) ?? 5,
       onlyLog: core.getInput('only-log') === 'true'
     }
+
+    core.info('Arguments parsed. Starting creation.')
 
     await tryCreateRetro(args)
   } catch (error) {
