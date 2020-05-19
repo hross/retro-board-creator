@@ -15,7 +15,7 @@ async function run(): Promise<void> {
         core.getInput('handles', {required: true})
       ),
       retroCadenceInWeeks: parseInt(core.getInput('retro-cadence-weeks')) ?? 1,
-      retroDayOfWeek: parseInt(core.getInput('retro-day-of-week')) ?? 0,
+      retroDayOfWeek: parseInt(core.getInput('retro-day-of-week')) ?? 5,
       onlyLog: core.getInput('only-log') === 'true'
     }
 
