@@ -7449,7 +7449,7 @@ function findLatestRetroDate(client) {
         // find all the projects with a retro format, parse the date and return the first date after sort
         const sorted = projects.data
             .filter(proj => proj.body.startsWith(retroBodyStart))
-            .map(proj => new Date(proj.body.replace(retroBodyStart, '')).getMilliseconds())
+            .map(proj => Date.parse(proj.body.replace(retroBodyStart, '')))
             .sort();
         core.info(`Found ${sorted.length} retro projects for this repo`);
         // return the latest or today's date

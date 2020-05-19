@@ -82,9 +82,7 @@ async function findLatestRetroDate(client: github.GitHub): Promise<Date> {
   // find all the projects with a retro format, parse the date and return the first date after sort
   const sorted = projects.data
     .filter(proj => proj.body.startsWith(retroBodyStart))
-    .map(proj =>
-      Date.parse(proj.body.replace(retroBodyStart, ''))
-    )
+    .map(proj => Date.parse(proj.body.replace(retroBodyStart, '')))
     .sort()
 
   core.info(`Found ${sorted.length} retro projects for this repo`)
