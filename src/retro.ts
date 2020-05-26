@@ -63,8 +63,12 @@ function whoIsNext(handles: string[], retroCadenceInWeeks: number): string {
   const today = new Date()
   const diff = today.getTime() - firstWeek.getTime()
   const daysSince = Math.floor(diff / (1000 * 60 * 60 * 24))
+  core.info(`Days since: ${daysSince}`)
   const retrosSince = Math.floor(daysSince / (7 * retroCadenceInWeeks))
-  const index = Math.ceil((retrosSince / 2) % handles.length)
+  core.info(`Retros since: ${retrosSince}`)
+  core.info(`List of handles length: ${handles.length}`)
+  const index = Math.floor(retrosSince % handles.length)
+  core.info(`Handle index: ${index}`)
   const nxt = handles[index]
 
   return nxt
