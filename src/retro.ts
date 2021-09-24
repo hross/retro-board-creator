@@ -153,7 +153,7 @@ async function createBoard(
     return ''
   }
 
-  const columnNames = ['Action items!', 'Shoutouts', 'Could be better', 'Good']
+  const columnNames = ['Action items!', 'Shoutouts', 'Could be better', 'Good', 'Action items from last retro']
   for (const name of columnNames) {
     client.projects.createColumn({
       project_id: project.data.id,
