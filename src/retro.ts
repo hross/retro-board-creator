@@ -46,7 +46,7 @@ export async function tryCreateRetro(args: IRetroArguments): Promise<void> {
 
   if (!args.onlyLog) {
     // create the project board
-    const projectUrl = await createBoard(client, retroDate, retroRepo)
+    const projectUrl = await createBoard(client, retroDate, args.retroRepo)
 
     // create the issue
     await createTrackingIssue(client, projectUrl, nextRetroDriver)
