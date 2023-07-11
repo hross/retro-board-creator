@@ -6,6 +6,7 @@ export interface IRetroArguments {
   handles: string[]
   retroCadenceInWeeks: number
   retroDayOfWeek: number
+  retroRepo: string
   onlyLog: boolean
 }
 
@@ -45,7 +46,7 @@ export async function tryCreateRetro(args: IRetroArguments): Promise<void> {
 
   if (!args.onlyLog) {
     // create the project board
-    const projectUrl = await createBoard(client, retroDate)
+    const projectUrl = await createBoard(client, retroDate, retroRepo)
 
     // create the issue
     await createTrackingIssue(client, projectUrl, nextRetroDriver)
@@ -134,7 +135,8 @@ function nextRetroDate(
 // create the retro board and return the URL
 async function createBoard(
   client: github.GitHub,
-  retroDate: Date
+  retroDate: Date,
+  retroRepo: string
 ): Promise<string> {
   const readableDate = retroDate.toLocaleDateString('en-US', {
     day: '2-digit',
@@ -144,7 +146,7 @@ async function createBoard(
 
   const project = await client.projects.createForRepo({
     owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
+    repo: retroRepo ? retroRepo : github.context.repo.repo,
     name: `Retrospective - Week of ${readableDate}`,
     body: `Retro on ${retroDate}`
   })

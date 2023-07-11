@@ -6,7 +6,7 @@ inputs:
     description: 'Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.'
     required: true
   handles:
-    description: 'The message to post on the issue when tagging it. If none provided, will not mark issues stale.'
+    description: 'List of handles to use the in the retro, comma separated'
     required: true
   retro-cadence-weeks:
     description: 'How often are your retros, in weeks?'
@@ -14,6 +14,9 @@ inputs:
   retro-day-of-week:
     description: 'The day of the week to schedule a retro on. Default is Friday.'
     default: 5
+  retro-repo:
+    description: 'Repository to create the retro in.'
+    default: ''
   only-log:
     description: 'Run in text output only mode. Do not actually create a retro board/issue.'
     default: false
